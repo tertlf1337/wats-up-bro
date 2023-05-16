@@ -1,0 +1,107 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import(
+        QApplication, QWidget,
+        QHBoxLayout, QVBoxLayout,
+        QGroupBox, QRadioButton,
+        QPushButton, QLabel, QListWidget, QLineEdit)
+
+
+from instr import *
+class Second_win(QWidget):
+    def __init__(self):
+        self.initUI()
+        self.set_apear()
+        self.connects()
+        self.show()
+
+    def set_appear(self):
+        self.setWindowTitle(txt_title) 
+        self.resize(win_width, win_height)
+        self.move(win_x, win_y)
+    def initUI(self):
+        self.name = QLabel('Введите Ф. И. О.')
+        self.input_name = QLineEdit('0')
+        self.age = QLabel('Полных лет:')
+        self.input_age = QLineEdit('0')
+        self.btn_test_1 = QPushButton('Начать первый тест')
+        self.input_btn_test_1 = QLineEdit('0')
+        self.test_2 = QLabel('Начать делать приседания')
+        self.test_3 = QLabel('Начать финальный тест')
+        self.input_test_3 = QLineEdit('0')
+        self.v_line1 = QVBoxLayout()
+        self.v_line2 = QVBoxLayout() 
+        self.v_line1.addWidget(self.name, alignment = Qt.AlignCenter)
+        self.v_line1.addWidget(self.input_name, alignment = Qt.AlignCenter)
+        self.v_line1.addWidget(self.age, alignment = Qt.AlignCenter)
+        self.v_line1.addWidget(self.input_age, alignment = Qt.AlignCenter)
+        self.v_line2.addWidget(self.name, alignment = Qt.AlignCenter)
+        self.v_line2.addWidget(self.input_btn_test_1, alignment = Qt.AlignCenter)
+        self.v_line2.addWidget(self.btn_test_1, alignment = Qt.AlignCenter)
+        self.v_line2.addWidget(self.test_2, alignment = Qt.AlignCenter)
+        self.v_line2.addWidget(self.test_3, alignment = Qt.AlignCenter)
+        self.v_line2.addWidget(self.input_test_3, alignment = Qt.AlignCenter)
+
+
+
+        self.btn_test_2 = QPushButton('Начать второй тест')
+        self.btn_test_3 = QPushButton('Начать третий тест')
+
+        self.v_line1 = QVBoxLayout()
+        self.main_line = QHBoxLayout()
+        self.main_line.addLayout(self.v_line1)
+        self.main_line.addLayout(self.v_line2)
+        self.setLayout(self.main_line)
+        
+        self.v_line2 = QVBoxLayout()
+        self.main_line = QHBoxLayout()
+        self.main_line.addLayout(self.v_line1)
+        self.main_line.addLayout(self.v_line2)
+        self.setLayout(self.main_line)
+
+
+    def timer_test1(self):
+        time = QTime(0,1,0)
+        self.timer = QTime()
+        self.timer.timeout.connect(self.timer1Event)
+        self.timer.start(1000)
+    def timer1Event(self):
+        global time 
+        time = time.addSec(-1)
+        self.text_timer.setText(time.toString("hh:mm:ss"))
+        self.text_time.setFront(QFont("Times", 36, QFont.Bold))
+        self.text_time.setStyleSheet("color: rgb(0,0,0)")
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
+
+    def timer_test2(self):
+        time = QTime(0,1,0)
+        self.timer = QTime()
+        self.timer.timeout.connect(self.timer2Event)
+        self.timer.start(1000)
+    def timer2Event(self):
+        global time 
+        time = time.addSec(-1)
+        self.text_timer.setText(time.toString("hh:mm:ss"))
+        self.text_time.setFront(QFont("Times", 36, QFont.Bold))
+        self.text_time.setStyleSheet("color: rgb(0,0,0)")
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
+
+    def timer_test3(self):
+        time = QTime(0,1,0)
+        self.timer = QTime()
+        self.timer.timeout.connect(self.timer3Event)
+        self.timer.start(1000)
+    def timer3Event(self):
+        global time 
+        time = time.addSec(-1)
+        self.text_timer.setText(time.toString("hh:mm:ss"))
+        self.text_time.setFront(QFont("Times", 36, QFont.Bold))
+        self.text_time.setStyleSheet("color: rgb(0,0,0)")
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
+
+    def connects(self):
+        self.btn_test_1.clicked.connect(self.timer_test1)
+        self.btn_test_2.clicked.connect(self.timer_test2)
+        self.btn_test_3.clicked.connect(self.timer_test3)
